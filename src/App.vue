@@ -1,17 +1,11 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <div>title</div>
-
+    <v-app-bar app color="element" height="80" class="px-10">
+      <div class="text-h2">Where in the world?</div>
       <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+      <v-btn @click="changeTheme" text>
+        <v-icon>{{$vuetify.theme.dark ? 'mdi-weather-sunny' : 'mdi-weather-night'}}</v-icon>
+        <span class="ml-2 text-button">{{$vuetify.theme.dark ? 'Light' : 'Dark'}} Mode</span>
       </v-btn>
     </v-app-bar>
 
@@ -23,8 +17,27 @@
 
 <script lang="ts">
 import Vue from "vue";
+import {
+  saveCacheData,
+  getCacheData,
+} from "@/core/services/cache/cache.service";
 
 export default Vue.extend({
   name: "App",
+
+  methods: {
+    changeTheme() {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+      saveCacheData("darkTheme", this.$vuetify.theme.dark);
+    },
+  },
+
+  created() {
+    // local storage returns string! so we can't pass the value directly
+    const isDark = getCacheData("darkTheme") as string;
+    if (isDark === "true") {
+      this.$vuetify.theme.dark = true;
+    }
+  },
 });
 </script>
