@@ -3,6 +3,9 @@
     "target": "esnext",
     "module": "esnext",
     "strict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
@@ -13,7 +16,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env"
+      "webpack-env",
+      "vuetify",
     ],
     "paths": {
       "@/*": [
@@ -32,7 +36,8 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "src/core/mixins/*.js"
   ],
   "exclude": [
     "node_modules"
