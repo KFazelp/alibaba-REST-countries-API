@@ -30,11 +30,7 @@ const apiService = async (
       response: { status = "", statusText = "", headers = {}, data = null },
     } = error;
 
-    const message = data.non_field_errors
-      ? data.non_field_errors[0]
-      : data.message
-      ? data.message
-      : "Something went wrong! please try agina later.";
+    const message = "Something went wrong! please try agina later.";
 
     throw {
       status,
