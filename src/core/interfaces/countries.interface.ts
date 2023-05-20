@@ -7,13 +7,15 @@ export interface countryInterface {
   name: string;
   data: {
     nativeName: string;
-    population: number;
+    population: number | string;
     region: string;
     subRegion: string;
     capital: string;
+  };
+  otherData: {
     topLevelDomain: string;
     currencies: string;
-    languages: Array<string>;
+    languages: string;
   };
   borderCountries: Array<string>;
   flagUrl: string;

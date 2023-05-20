@@ -5,4 +5,7 @@ export const countriesUrl = {
   singleCountry: function (name: string) {
     return `name/${name}/`;
   },
+  countryCode: function () {
+    return `/alpha/`;
+  },
 };
