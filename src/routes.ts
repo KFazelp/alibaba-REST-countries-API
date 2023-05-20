@@ -1,11 +1,11 @@
 import { RouteConfig } from "vue-router";
-import Home from "@/views/Home.vue";
+import AllCountries from "@/views/allCountries/AllCountries.vue";
 
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "AllCountries",
+    component: AllCountries,
   },
 ];
 
