@@ -10,10 +10,12 @@ export const SINGLE_COUNTRY_FIELDS = ["name", "tld", "currencies", "capital", "r
 // action types
 export const COUNTRIES = "getAllCountries";
 export const SEARCH_COUNTRY = "searchCountryByName";
+export const COUNTRY = "getSelectedCountryData";
+export const COUNTRY_CODE = "getCountryNameByCode";
 
 // mutation types
-export const SET_COUNTRIES = "setAllVisits";
-export const SET_SELECTED_COUNTRY = "setVisitAddress";
+export const SET_COUNTRIES = "setAllCountries";
+export const SET_SELECTED_COUNTRY = "setSelectedCountryData";
 
 const state = {
   allCountries: [] as Array<summarizedCountryInterface>,
@@ -76,6 +78,48 @@ const actions = {
       return null;
     }
   },
+
+  async [COUNTRY](context: any, name: string) {
+    try {
+      const response = await apiService({
+        request: {
+          url: countriesUrl.singleCountry(name),
+          method: "GET",
+          data: {
+            fields: SINGLE_COUNTRY_FIELDS.toString(),
+          },
+        },
+      });
+
+      const { data } = response;
+      context.commit(SET_SELECTED_COUNTRY, data[0]);
+
+      return response;
+    } catch (error: any) {
+      throw { ...error } as HttpResponse;
+    }
+  },
+
+  async [COUNTRY_CODE](context: any, code: string) {
+    try {
+      const response = await apiService({
+        request: {
+          url: countriesUrl.countryCode(),
+          method: "GET",
+          data: {
+            codes: code,
+            fields: "name",
+          },
+        },
+      });
+
+      const { data } = response;
+
+      return data[0].name.common;
+    } catch (error: any) {
+      throw { ...error } as HttpResponse;
+    }
+  }
 };
 
 const mutations = {
@@ -93,6 +137,26 @@ const mutations = {
       } as summarizedCountryInterface);
     });
     state.allCountries = tempCountries;
+  },
+
+  [SET_SELECTED_COUNTRY](state: countriesStateInterface, data: apiCountryInterface) {
+    state.country = {
+      name: data.name.common,
+      data: {
+        nativeName: Object.values(data.name.nativeName)[0].common,
+        population: data.population.toLocaleString('en'),
+        region: data.region,
+        subRegion: data.subregion,
+        capital: data.capital[0],
+      },
+      otherData: {
+        topLevelDomain: data.tld[0],
+        currencies: Object.values(data.currencies)[0].name,
+        languages: Object.values(data.languages).toString(),
+      },
+      flagUrl: data.flags.png,
+      borderCountries: data.borders,
+    } as countryInterface;
   },
 };
 
