@@ -67,6 +67,7 @@ import BorderCountryCard from "./fragments/borderCountry.card";
 import SingleCountryLoader from "./fragments/singleCountry.loader";
 import Vue from "vue";
 import { mapGetters } from "vuex";
+import { SET_ALERT } from "@/core/services/store/modules/alert.module";
 
 export default Vue.extend({
   name: "SingleCountry",
@@ -90,7 +91,14 @@ export default Vue.extend({
       this.loading = true;
       await this.$store
         .dispatch(COUNTRY, this.countryName)
-        .then(() => (this.loading = false));
+        .then(() => (this.loading = false))
+        .catch((error) => {
+          this.$store.commit(SET_ALERT, {
+            text: error.message,
+            isError: true,
+            visibility: true,
+          });
+        });
     },
   },
 

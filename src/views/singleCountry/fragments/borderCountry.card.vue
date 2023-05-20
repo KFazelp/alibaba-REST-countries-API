@@ -15,6 +15,7 @@
 </template>
 
 <script lang="ts">
+import { SET_ALERT } from "@/core/services/store/modules/alert.module";
 import { COUNTRY_CODE } from "@/core/services/store/modules/countries.module";
 import Vue from "vue";
 
@@ -34,14 +35,22 @@ export default Vue.extend({
   methods: {
     async getName() {
       this.name = null;
-      this.name = await this.$store.dispatch(COUNTRY_CODE, this.code); // couldn't handle this in store (its not efficient)
+      this.name = await this.$store
+        .dispatch(COUNTRY_CODE, this.code)  // couldn't handle this in store (its not efficient)
+        .catch((error) => {
+          this.$store.commit(SET_ALERT, {
+            text: error.message,
+            isError: true,
+            visibility: true,
+          });
+        });
     },
   },
 
   // when we route from another country to the other, the component has not changed!
   // we have to check data manually to update name on code change
   watch: {
-    code: async function() {
+    code: async function () {
       await this.getName();
     },
   },

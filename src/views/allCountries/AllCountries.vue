@@ -63,6 +63,7 @@ import CountriesFilter from "./fragments/countries.filter";
 import CountriesLoader from "./fragments/countries.loader";
 import Vue from "vue";
 import { mapGetters } from "vuex";
+import { SET_ALERT } from "@/core/services/store/modules/alert.module";
 
 export default Vue.extend({
   name: "AllCountries",
@@ -91,7 +92,16 @@ export default Vue.extend({
   },
 
   async created() {
-    await this.$store.dispatch(COUNTRIES).then(() => (this.loading = false));
+    await this.$store
+      .dispatch(COUNTRIES)
+      .then(() => (this.loading = false))
+      .catch((error) => {
+        this.$store.commit(SET_ALERT, {
+          text: error.message,
+          isError: true,
+          visibility: true,
+        });
+      });
   },
 
   components: {
