@@ -18,7 +18,7 @@ export default new Vuetify({
       },
       dark: {
         text: "#ffffff", // White: hsl (0, 0%, 100%)
-        input: "#2b3945", // Dark Blue: hsl (209, 23%, 22%)
+        input: "#fafafa", // Dark Blue: hsl (209, 23%, 22%)
         background: "#202c37", // Very Dark Blue: hsl (207, 26%, 17%)
         element: "#2b3945", // Dark Blue: hsl (209, 23%, 22%)
       },

@@ -2,9 +2,17 @@
 
 $body-font-family: 'Nunito Sans', sans-serif !default;
 
-$shadow-key-umbra-opacity: rgba(82,63,105,.05);
-$shadow-key-penumbra-opacity: rgba(82,63,105,.05);
-$shadow-key-ambient-opacity: rgba(82,63,105,.05);
+$shadow-key-umbra-opacity: rgba(82,63,105,.03);
+$shadow-key-penumbra-opacity: rgba(82,63,105,.03);
+$shadow-key-ambient-opacity: rgba(82,63,105,.03);
+
+$grid-breakpoints: (
+  'xs': 0,
+  'sm': 375px, // set mobile screen size to 375px
+  'md': 540px,
+  'lg': 800px - 24px,
+  'xl': 1280px - 24px
+);
 
 // Typography configuration
 $headings: (
@@ -36,6 +44,10 @@ $headings: (
   "subtitle-2": (
     "size": 14px,
     "weight": 300,
+  ),
+  "caption": (
+    "size": 14px,
+    "weight": 800,
   ),
   "button": (
     "size": 18px,
